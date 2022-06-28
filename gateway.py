@@ -12,30 +12,43 @@ def handleDrones():
     while True:
         data, address = sock.recvfrom(4096)
         data = data.decode().split(' ')
-    
+        drone_id = data[1]
+        
         if data[0] == "READY":
-            drone_id = data[1];
             connections[drone_id]=address
             available_drones.append(drone_id)
             print("Drone", drone_id, "connected")
         elif data[0] == "/delivered":
-            available_drones.append(data[1])
-            message = "Delivery completed by " + data[1]
-            print('[SOURCE:', data[1], '  RECEIVER: Client] ==>', message)
+            available_drones.append(drone_id)
+            message = "Delivery completed by " + drone_id
+            if drone_id=="D1":
+                ip_drone="10.10.10.1"
+            elif drone_id=="D2":
+                ip_drone="10.10.10.2"
+            elif drone_id=="D3":
+                ip_drone="10.10.10.3"
+                
+            print('[SOURCE:+' , data[1] , '(' , ip_drone , ')  RECEIVER: Client(192.168.0.1)] ==>', message)
             connectionSocket.send(message.encode())
 
 def launchDrone(id_drone, delivery_address):
     message = delivery_address
 
     try:
-        print ('[SOURCE: Client   RECEIVER:', id_drone + '] ==> Request delivery at', message)
+        if id_drone=="D1":
+            ip_drone="10.10.10.1"
+        elif id_drone=="D2":
+            ip_drone="10.10.10.2"
+        elif id_drone=="D3":
+            ip_drone="10.10.10.3"
+        print ('[SOURCE: Client(192.168.0.1)  RECEIVER: ', id_drone , '(', ip_drone , ')] ==> Request delivery at', message)
         sock.sendto(message.encode(), connections[id_drone])
         available_drones.remove(id_drone)
     except Exception as info:
         print(info)
 
 server = sk.socket(sk.AF_INET, sk.SOCK_STREAM)
-server.bind(("localhost", 8100))
+server.bind(("localhost", 8400))
 server.listen(2)
 
 connections = dict()
@@ -48,7 +61,7 @@ t = threading.Thread(target=handleDrones, args=())
 t.start()
 
 print('Ready to serve...')
-connectionSocket, addr = server.accept()
+connectionSocket, address_Client = server.accept()
 print('Client connected')
 
 while True:
