@@ -15,35 +15,27 @@ def handleDrones():
         drone_id = data[1]
         
         if data[0] == "READY":
+            logic_conn[drone_id]=data[2]
             connections[drone_id]=address
             available_drones.append(drone_id)
             print("Drone", drone_id, "connected")
         elif data[0] == "/delivered":
             available_drones.append(drone_id)
             message = "Delivery completed by " + drone_id
-            if drone_id=="D1":
-                ip_drone="10.10.10.1"
-            elif drone_id=="D2":
-                ip_drone="10.10.10.2"
-            elif drone_id=="D3":
-                ip_drone="10.10.10.3"
-                
-            print('[SOURCE:+' , data[1] , '(' , ip_drone , ')  RECEIVER: Client(192.168.0.1)] ==>', message)
+            ip_drone = logic_conn[drone_id]
+            print('[SOURCE:' , data[1] , '(' + ip_drone + ')  RECEIVER: Client (192.168.0.1)] ==>', message)
             connectionSocket.send(message.encode())
+        elif data[0] == "/close":
+            print("TODO")
 
-def launchDrone(id_drone, delivery_address):
+def launchDrone(drone_id, delivery_address):
     message = delivery_address
 
     try:
-        if id_drone=="D1":
-            ip_drone="10.10.10.1"
-        elif id_drone=="D2":
-            ip_drone="10.10.10.2"
-        elif id_drone=="D3":
-            ip_drone="10.10.10.3"
-        print ('[SOURCE: Client(192.168.0.1)  RECEIVER: ', id_drone , '(', ip_drone , ')] ==> Request delivery at', message)
-        sock.sendto(message.encode(), connections[id_drone])
-        available_drones.remove(id_drone)
+        ip_drone = logic_conn[drone_id]
+        print ('[SOURCE: Client (192.168.0.1)  RECEIVER:', drone_id , '(' + ip_drone + ')] ==> Request delivery at', message)
+        sock.sendto(message.encode(), connections[drone_id])
+        available_drones.remove(drone_id)
     except Exception as info:
         print(info)
 
@@ -51,6 +43,7 @@ server = sk.socket(sk.AF_INET, sk.SOCK_STREAM)
 server.bind(("localhost", 8400))
 server.listen(2)
 
+logic_conn = dict()
 connections = dict()
 available_drones = []
 
@@ -70,12 +63,12 @@ while True:
         message = message.decode()
         if message == "/drones":
             ans=""
-            
             for drone in connections.keys():
+                ans += drone + " (" + logic_conn[drone] +  ")"
                 if drone in available_drones:
-                    ans += drone + " Available\n"
+                    ans += " Available\n"
                 else:
-                    ans += drone + " Not available\n"
+                    ans += " Not available\n"
                     
             connectionSocket.send(ans.encode())
         elif message.split(' ')[0] == "/ship":
@@ -91,7 +84,7 @@ while True:
         
     except Exception as data:
         print (Exception,":",data)
-        break
         connectionSocket.close()
+        break
         
 connectionSocket.close()

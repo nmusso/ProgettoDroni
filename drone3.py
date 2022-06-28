@@ -13,7 +13,7 @@ import random
 sock = sk.socket(sk.AF_INET, sk.SOCK_DGRAM)
 
 server_address = ('localhost', 8200)
-message = "READY D3"
+message = "READY D3 10.10.10.3"
 sock.sendto(message.encode(), server_address) 
 print("Connected to Server")
 
