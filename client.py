@@ -16,7 +16,7 @@ def wait_response():
 clientsocket = sk.socket(sk.AF_INET, sk.SOCK_STREAM)
 
 try:
-    clientsocket.connect(("localhost",8100))
+    clientsocket.connect(("localhost",8106))
 except Exception as data:
     print (Exception,":",data)
 
