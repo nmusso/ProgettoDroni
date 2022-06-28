@@ -11,12 +11,12 @@ import threading
 def wait_response():
     response = clientsocket.recv(1024)
     response = response.decode()
-    print (response)  
+    print (response)
 
 clientsocket = sk.socket(sk.AF_INET, sk.SOCK_STREAM)
 
 try:
-    clientsocket.connect(("localhost",8106))
+    clientsocket.connect(("localhost",8100))
 except Exception as data:
     print (Exception,":",data)
 

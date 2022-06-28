@@ -13,7 +13,7 @@ import random
 sock = sk.socket(sk.AF_INET, sk.SOCK_DGRAM)
 
 server_address = ('localhost', 8200)
-message = "READY D1"
+message = "READY D3"
 sock.sendto(message.encode(), server_address) 
 print("Connected to Server")
 
@@ -26,5 +26,5 @@ while True:
     time.sleep(random.randrange(15,20,1))
     
     print("Package delivered at", delivery_address)
-    data1='/delivered D1'
+    data1='/delivered D3'
     sock.sendto(data1.encode(), address)
