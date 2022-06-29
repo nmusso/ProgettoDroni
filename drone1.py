@@ -18,13 +18,19 @@ sock.sendto(message.encode(), server_address)
 print("Connected to Server")
 
 while True:
-    print('Ready to ship...')
-    data, address = sock.recvfrom(4096)
-    
-    delivery_address=data.decode()
-    print("Shipping at", delivery_address + "...")   
-    time.sleep(random.randrange(15,20,1))
-    
-    print("Package delivered at", delivery_address)
-    data1='/delivered D1'
-    sock.sendto(data1.encode(), address)
+    try:
+        print('Ready to ship...')
+        data, address = sock.recvfrom(4096)
+        
+        delivery_address=data.decode()
+        print("Shipping at", delivery_address + "...")   
+        time.sleep(random.randrange(15,20,1))
+        
+        print("Package delivered at", delivery_address)
+        data1='/delivered D1'
+        sock.sendto(data1.encode(), address)
+    except KeyboardInterrupt:
+        print("Closing...")
+        data='/close D1'
+        sock.sendto(data.encode(), address)
+        break

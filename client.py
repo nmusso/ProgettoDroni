@@ -22,8 +22,15 @@ except Exception as data:
 
 while True:
     request = input("Insert command: ")
-    clientsocket.send(request.encode()) 
-    t = threading.Thread(target=wait_response, args=())
-    t.start()
+    if request == '/help':
+        print("Commands:")
+        print("/drones: Get list of all drones, with info about availability")      
+        print("/ship drone_id delivery_address: Use a drone to ship to a specific address")
+    elif request == '/drones' or request.split(' ')[0] == '/ship':
+        clientsocket.send(request.encode()) 
+        t = threading.Thread(target=wait_response, args=())
+        t.start()
+    else:
+        print("Command not found")
 
 clientsocket.close()

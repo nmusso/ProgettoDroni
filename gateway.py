@@ -15,10 +15,13 @@ def handleDrones():
         drone_id = data[1]
         
         if data[0] == "READY":
-            logic_conn[drone_id]=data[2]
-            connections[drone_id]=address
-            available_drones.append(drone_id)
-            print("Drone", drone_id, "connected")
+            if drone_id not in connections.keys():
+                logic_conn[drone_id]=data[2]
+                connections[drone_id]=address
+                available_drones.append(drone_id)
+                print("Drone", drone_id, "connected")
+            else:
+                print("Drone", drone_id, "already connected")
         elif data[0] == "/delivered":
             available_drones.append(drone_id)
             message = "Delivery completed by " + drone_id
@@ -26,7 +29,11 @@ def handleDrones():
             print('[SOURCE:' , data[1] , '(' + ip_drone + ')  RECEIVER: Client (192.168.0.1)] ==>', message)
             connectionSocket.send(message.encode())
         elif data[0] == "/close":
-            print("TODO")
+            logic_conn.pop(drone_id)
+            connections.pop(drone_id)
+            if drone_id in available_drones:
+                available_drones.remove(drone_id) 
+            print("Drone", drone_id, "disconnected")
 
 def launchDrone(drone_id, delivery_address):
     message = delivery_address
@@ -79,7 +86,7 @@ while True:
                 t = threading.Thread(target=launchDrone, args=(drone_id, delivery_address))
                 t.start()      
             else:
-                message = "Drone " + drone_id + " is not available. Check the availables drones with /drones"
+                message = "Drone " + drone_id + " is not available. Check availables drones with /drones"
                 connectionSocket.send(message.encode())
         
     except Exception as data:
