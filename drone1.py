@@ -33,4 +33,5 @@ while True:
         print("Closing...")
         data='/close D1'
         sock.sendto(data.encode(), address)
+        sock.close()
         break
