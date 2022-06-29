@@ -33,6 +33,6 @@ while True:
     except KeyboardInterrupt:
         print("Closing...")
         data='/close D1'
-        sock.sendto(data.encode(), address)
+        sock.sendto(data.encode(), server_address)
         sock.close()
         break
