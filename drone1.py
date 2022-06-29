@@ -12,7 +12,7 @@ sock = sk.socket(sk.AF_INET, sk.SOCK_DGRAM)
 
 server_address = ('localhost', 8200)
 #Invia messaggio al gateway per la connessione
-message = "READY D1 10.10.10.1"
+message = "/ready D1 192.168.1.101"
 sock.sendto(message.encode(), server_address) 
 print("Connected to Server")
 

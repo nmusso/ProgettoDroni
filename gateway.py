@@ -13,8 +13,8 @@ def handleDrones():
         data = data.decode().split(' ')
         drone_id = data[1]
         
-        #Se il drone invia READY significa che si è connesso ed è pronto
-        if data[0] == "READY":
+        #Se il drone invia /ready significa che si è connesso ed è pronto
+        if data[0] == "/ready":
             if drone_id not in connections.keys():
                 logic_conn[drone_id]=data[2]
                 connections[drone_id]=address
@@ -59,7 +59,7 @@ client_ip=""
 
 #Creazione socket TCP
 server = sk.socket(sk.AF_INET, sk.SOCK_STREAM)
-server.bind(("localhost", 8400))
+server.bind(("localhost", 8100))
 server.listen(2)
 
 #Creazione socket UDP
@@ -104,7 +104,7 @@ while True:
             else:
                 #Se il messaggio è indirizzato a un IP che fa parte della subnet del client, allora viene
                 #comunicato al client che non è necessario l'utilizzo del gateway per questo compito 
-                if len(drone.split('.')) == 4 and '.'.join(drone.split('.')[:3]) == "192.168.1":
+                if len(drone.split('.')) == 4 and '.'.join(drone.split('.')[:3]) == "10.10.10":
                     message = "The given IP belongs to your subnet and doesn't need this gateway"
                 else:
                     message = "Drone " + drone + " is not available. Check availables drones with /drones"

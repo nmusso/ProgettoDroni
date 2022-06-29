@@ -15,9 +15,9 @@ def wait_response():
 clientsocket = sk.socket(sk.AF_INET, sk.SOCK_STREAM)
 
 try:
-    clientsocket.connect(("localhost",8400))
+    clientsocket.connect(("localhost",8100))
     #Simula la connessione e la comunicazione del proprio IP al gateway
-    message="/hello 192.168.1.1"
+    message="/hello 10.10.10.101"
     clientsocket.send(message.encode())
     print("Connected to server\n")
 except Exception as data:
