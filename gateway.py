@@ -50,11 +50,6 @@ def launchDrone(drone_id, delivery_address):
         socketUDP.sendto(message.encode(), connections[drone_id])
     except Exception as info:
         print(info)
-        
-def waitClient():    
-    sock, addr = server.accept()
-    return sock, addr
-
 
 logic_conn = dict()
 connections = dict()
@@ -75,7 +70,7 @@ t.start()
 
 print('Ready to serve...')
 #Attende la connessione del client TCP
-socketTCP, connection_address = waitClient()
+socketTCP, connection_address = server.accept()
 
 while True:
     try:
@@ -123,7 +118,7 @@ while True:
         elif message == '/close':
             client_ip = None
             print("Client disconnected")
-            socketTCP, connection_address = waitClient()
+            socketTCP, connection_address = server.accept()
             
     except Exception as data:
         print (Exception,":",data)
