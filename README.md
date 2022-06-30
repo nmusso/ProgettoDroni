@@ -17,4 +17,4 @@ In seguito si possono avviare in qualsiasi ordine:
   * Se non si usa Spyder, da terminale:  
    ```python3  droneX.py```
 
-I comandi utili per testare il tutto sono quelli lanciabili dalla console del Client e sono fruibili con il comando /help direttamente da essa.
+I comandi utili per testare il tutto sono quelli lanciabili dalla console del Client e sono fruibili con il comando _**/help**_ direttamente da essa.
