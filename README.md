@@ -27,6 +27,12 @@ D1 (192.168.1.101) Available
 D2 (192.168.1.102) Not available
 ```
    
-```Insert command: /ship 192.168.1.101 Via delle Forche 12``` oppure ```/ship D1 Via delle Forche 12```
+```
+Insert command: /ship 192.168.1.101 Via delle Forche 12
+``` 
+oppure 
+```
+/ship D1 Via delle Forche 12
+```
 
 
