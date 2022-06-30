@@ -21,9 +21,11 @@ I comandi utili per testare il tutto sono quelli lanciabili dalla console del Cl
 
 Esempi di utilizzo funzioni principali da console del Client:
 
-```Insert command: /drones
-   D1 (192.168.1.101) Available
-   D2 (192.168.1.102) Not available```
+```
+Insert command: /drones 
+D1 (192.168.1.101) Available
+D2 (192.168.1.102) Not available
+```
    
 ```Insert command: /ship 192.168.1.101 Via delle Forche 12``` oppure ```/ship D1 Via delle Forche 12```
 
