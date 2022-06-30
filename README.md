@@ -1,6 +1,6 @@
 # ProgettoDroni
 
-##Guida Utente
+## Guida Utente
 È **raccomandato** l’utilizzo di Spyder per un’esecuzione ottimale.
 Come prima cosa è necessario avviare il Gateway
 Se non si usa Spyder, da terminale:  ```python3  gateway.py```   
