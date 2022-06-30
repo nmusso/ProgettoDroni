@@ -41,6 +41,10 @@ while True:
         clientsocket.send(request.encode()) 
         t = threading.Thread(target=wait_response, args=())
         t.start()
+    elif request == '/close':
+        clientsocket.send(request.encode())
+        clientsocket.close()
+        break
     else:
         print("Command not found")
 

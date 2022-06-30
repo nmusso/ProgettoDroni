@@ -50,12 +50,16 @@ def launchDrone(drone_id, delivery_address):
         socketUDP.sendto(message.encode(), connections[drone_id])
     except Exception as info:
         print(info)
+        
+def waitClient():    
+    sock, addr = server.accept()
+    return sock, addr
 
 
 logic_conn = dict()
 connections = dict()
 available_drones = []
-client_ip=""
+client_ip=None
 
 #Creazione socket TCP
 server = sk.socket(sk.AF_INET, sk.SOCK_STREAM)
@@ -71,7 +75,7 @@ t.start()
 
 print('Ready to serve...')
 #Attende la connessione del client TCP
-socketTCP, address_Client = server.accept()
+socketTCP, connection_address = waitClient()
 
 while True:
     try:
@@ -87,7 +91,9 @@ while True:
                     ans += " Available\n"
                 else:
                     ans += " Not available\n"
-                    
+            
+            if ans == "":
+                ans = "No drones connected"
             socketTCP.send(ans.encode())
         #Se il client invia /ship, controlla che ci siano almeno 3 argomenti e gestisce il lancio del drone
         elif message.split(' ')[0] == "/ship" and len(message.split(' ')) >= 3:
@@ -111,10 +117,14 @@ while True:
                     
                 socketTCP.send(message.encode())
         #Se il client invia /hello e il suo IP, si salva l'IP controllando che non sia già salvato
-        elif message.split(' ')[0] == '/hello' and not client_ip:
+        elif message.split(' ')[0] == '/hello' and client_ip is None:
             client_ip = message.split(' ')[1]
             print("Client connected (" + client_ip + ")")
-        
+        elif message == '/close':
+            client_ip = None
+            print("Client disconnected")
+            socketTCP, connection_address = waitClient()
+            
     except Exception as data:
         print (Exception,":",data)
         socketTCP.close()
