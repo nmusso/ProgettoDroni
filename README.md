@@ -20,7 +20,7 @@ In seguito si possono avviare in qualsiasi ordine:
 I comandi utili per testare il tutto sono quelli lanciabili dalla console del Client e sono fruibili con il comando _**/help**_ direttamente da essa.
 
 ## Esempi 
-Utilizzo funzioni principali da console del Client:
+Utilizzo funzioni principali da console del Client
 
 ### Richiesta droni disponibili
 ```
