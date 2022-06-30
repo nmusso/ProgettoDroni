@@ -19,14 +19,17 @@ In seguito si possono avviare in qualsiasi ordine:
 
 I comandi utili per testare il tutto sono quelli lanciabili dalla console del Client e sono fruibili con il comando _**/help**_ direttamente da essa.
 
-Esempi di utilizzo funzioni principali da console del Client:
+## Esempi 
+Utilizzo funzioni principali da console del Client:
 
+Richiesta droni disponibili
 ```
 Insert command: /drones 
 D1 (192.168.1.101) Available
 D2 (192.168.1.102) Not available
 ```
-   
+
+Richiesta di spedizione da parte di un drone ad un certo indirizzo
 ```
 Insert command: /ship 192.168.1.101 Via delle Forche 12
 ``` 
