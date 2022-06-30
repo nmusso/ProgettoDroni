@@ -14,7 +14,7 @@ server_address = ('localhost', 8200)
 #Invia messaggio al gateway per la connessione
 message = "/ready D3 192.168.1.103"
 sock.sendto(message.encode(), server_address) 
-print("Connected to Server")
+print("Connected to Gateway")
 
 while True:
     try:

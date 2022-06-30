@@ -24,7 +24,7 @@ try:
     #Simula la connessione e la comunicazione del proprio IP al gateway
     message="/hello 10.10.10.101"
     clientsocket.send(message.encode())
-    print("Connected to server\n")    
+    print("Connected to Gateway\n")    
     print("CLIENT CONSOLE: Use /help for list of commands")
     
     while True:
@@ -34,6 +34,7 @@ try:
             print("Commands:")
             print("/drones:\t Get list of all drones, with info about availability")      
             print("/ship <drone_id / drone_ip> <delivery_address>:\t Use a drone to ship to a specific address")
+            print("/close:\t Close the connection to the Gateway")
             
         elif request == '/drones' or request.split(' ')[0] == '/ship':
             if request.split(' ')[0] == '/ship':
